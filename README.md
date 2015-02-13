@@ -1,2 +1,2 @@
 # EasyCSRF
-A simple, standalone CSRF protection library
+A simple, standalone CSRF protection library.
