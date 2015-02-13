@@ -1,5 +1,6 @@
 # EasyCSRF
-A simple, standalone CSRF protection library.
+EasyCSRF is a simple, standalone CSRF protection library written in PHP. It can be used to
+protect your forms from [Cross Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery) attacks.
 
 ## Requirements
 
