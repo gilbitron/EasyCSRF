@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/gilbitron/EasyCSRF.svg?branch=master)](https://travis-ci.org/gilbitron/EasyCSRF)
+
 # EasyCSRF
 EasyCSRF is a simple, standalone CSRF protection library written in PHP. It can be used to
 protect your forms from [Cross Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery) attacks.
