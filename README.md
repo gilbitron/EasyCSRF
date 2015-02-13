@@ -102,7 +102,9 @@ class CustomSessionProvider implements SessionProvider {
     }
 
 }
+```
 
+```php
 $sessionProvider = new CustomSessionProvider();
 $easyCSRF = new EasyCSRF\EasyCSRF($sessionProvider);
 ```
