@@ -83,7 +83,7 @@ $easyCSRF->check('my_token', $_POST['token'], null, true);
 
 Your app might use a third party library for managing sessions, or you may want to store tokens somewhere other
 than $_SESSION (as the `NativeSessionProvider` does). In this case you can create a custom `SessionProvider`
-and use that when instanciating EasyCSRF.
+and use that when instantiating EasyCSRF.
 
 ```php
 <?php
