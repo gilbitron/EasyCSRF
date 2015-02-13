@@ -78,6 +78,35 @@ Tokens can be made reusable and not one-time only (useful for ajax-heavy request
 $easyCSRF->check('my_token', $_POST['token'], null, true);
 ```
 
+## Custom SessionProvider
+
+Your app might use a third party library for managing sessions, or you may want to store tokens somewhere other
+than $_SESSION (as the `NativeSessionProvider` does). In this case you can create a custom `SessionProvider`
+and use that when instanciating EasyCSRF.
+
+```php
+<?php
+
+use EasyCSRF\Interfaces\SessionProvider;
+
+class CustomSessionProvider implements SessionProvider {
+
+    public function get($key)
+    {
+        // Return your stored data
+    }
+
+    public function set($key, $value)
+    {
+        // Store your data
+    }
+
+}
+
+$sessionProvider = new CustomSessionProvider();
+$easyCSRF = new EasyCSRF\EasyCSRF($sessionProvider);
+```
+
 ## Credits
 
 EasyCSRF was created by [Gilbert Pellegrom](http://gilbert.pellegrom.me) from [Dev7studios](http://dev7studios.com).
