@@ -9,7 +9,7 @@ class EasyCSRF {
 
 	public function __construct(SessionProvider $sessionProvider)
 	{
-		$this->session = new $sessionProvider;
+		$this->session = $sessionProvider;
 	}
 
 	/**
