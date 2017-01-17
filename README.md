@@ -114,5 +114,5 @@ $easyCSRF = new EasyCSRF\EasyCSRF($sessionProvider);
 
 ## Credits
 
-EasyCSRF was created by [Gilbert Pellegrom](http://gilbert.pellegrom.me) from [Dev7studios](http://dev7studios.com).
+EasyCSRF was created by [Gilbert Pellegrom](http://gilbert.pellegrom.me) from [Dev7studios](http://dev7studios.co).
 Released under the MIT license.
