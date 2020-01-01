@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/alic2o/EasyCSRF.svg?branch=master)](https://travis-ci.org/alic2o/EasyCSRF)
-
 # EasyCSRF
+This is ported version of [EasyCSRF](https://github.com/gilbitron/EasyCSRF), upgraded and refactored to work with php >= 7.2.
 EasyCSRF is a simple, standalone CSRF protection library written in PHP. It can be used to
 protect your forms from [Cross Site Request Forgery](http://en.wikipedia.org/wiki/Cross-site_request_forgery) attacks.
 
 ## Requirements
 
-* PHP 5.4+
+* PHP 7.2+
 
 ## Install
 
