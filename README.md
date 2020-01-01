@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/gilbitron/EasyCSRF.svg?branch=master)](https://travis-ci.org/gilbitron/EasyCSRF)
+[![Build Status](https://travis-ci.org/alic2o/EasyCSRF.svg?branch=master)](https://travis-ci.org/alic2o/EasyCSRF)
 
 # EasyCSRF
 EasyCSRF is a simple, standalone CSRF protection library written in PHP. It can be used to
