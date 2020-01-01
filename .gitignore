@@ -2,4 +2,5 @@
 composer.*
 !composer.json
 .idea
+.history
 .phpunit.result.cache
