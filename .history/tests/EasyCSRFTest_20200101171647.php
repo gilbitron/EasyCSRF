@@ -8,18 +8,16 @@ class EasyCSRFTest extends TestCase {
 
 	protected $easyCSRF;
 
-	protected function setUp(): void
-    {
-        parent::setUp();
-        $_SERVER['REMOTE_ADDR'] = '1.1.1.1';
-        $_SERVER['HTTP_USER_AGENT'] = 'useragent';
+	protected function setUp()
+	{
+		$_SERVER['REMOTE_ADDR'] = '1.1.1.1';
+		$_SERVER['HTTP_USER_AGENT'] = 'useragent';
 
-        $sessionProvider = new NativeSessionProvider();
-        $this->easyCSRF = new EasyCSRF($sessionProvider);
+		$sessionProvider = new NativeSessionProvider();
+		$this->easyCSRF = new EasyCSRF($sessionProvider);
+	}
 
-    }
-
-    public function testGenerate()
+	public function testGenerate()
 	{
 		$token = $this->easyCSRF->generate('test');
 
@@ -44,21 +42,21 @@ class EasyCSRFTest extends TestCase {
 
 	public function testExceptionMissingFormToken()
 	{
-		$this->expectException(\EasyCSRF\Exceptions\MissingTokenException::class);
+		$this->setExpectedException('Exception', 'Missing CSRF form token.');
 
 		$this->easyCSRF->check('test', '');
 	}
 
 	public function testExceptionMissingSessionToken()
 	{
-		$this->expectException(\EasyCSRF\Exceptions\TokenMismatchException::class);
+		$this->setExpectedException('Exception', 'Missing CSRF session token.');
 
 		$this->easyCSRF->check('test', '12345');
 	}
 
 	public function testExceptionOrigin()
 	{
-		$this->expectException(\EasyCSRF\Exceptions\TokenMismatchException::class);
+		$this->setExpectedException('Exception', 'Form origin does not match token origin.');
 
 		$token = $this->easyCSRF->generate('test');
 		$_SERVER['REMOTE_ADDR'] = '2.2.2.2';
@@ -67,7 +65,7 @@ class EasyCSRFTest extends TestCase {
 
 	public function testExceptionInvalidToken()
 	{
-		$this->expectException(\EasyCSRF\Exceptions\Exception::class);
+		$this->setExpectedException('Exception', 'Invalid CSRF token.');
 
 		$this->easyCSRF->generate('test');
 		$this->easyCSRF->check('test', '12345');
@@ -75,7 +73,7 @@ class EasyCSRFTest extends TestCase {
 
 	public function testExceptionExpired()
 	{
-		$this->expectException(\EasyCSRF\Exceptions\ExpiredTokenException::class);
+		$this->setExpectedException('Exception', 'CSRF token has expired.');
 
 		$token = $this->easyCSRF->generate('test');
 		sleep(2);

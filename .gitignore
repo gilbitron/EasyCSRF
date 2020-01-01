@@ -1,3 +1,5 @@
 /vendor/
 composer.*
 !composer.json
+.idea
+.phpunit.result.cache
