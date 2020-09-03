@@ -1,9 +1,10 @@
-<?php namespace EasyCSRF\Interfaces;
+<?php
 
-interface SessionProvider {
+namespace EasyCSRF\Interfaces;
 
-	public function get($key);
+interface SessionProvider
+{
+    public function get($key);
 
-	public function set($key, $value);
-
+    public function set($key, $value);
 }
