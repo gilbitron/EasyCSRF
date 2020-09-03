@@ -13,11 +13,7 @@ protect your forms from [Cross Site Request Forgery](http://en.wikipedia.org/wik
 Install via [composer](https://getcomposer.org):
 
 ```
-{
-    "require": {
-        "gilbitron/easycsrf": "~1.0"
-    }
-}
+composer require gilbitron/easycsrf
 ```
 
 Run `composer install` then use as normal:
