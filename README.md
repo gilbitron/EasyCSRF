@@ -50,10 +50,11 @@ You then include this token with any forms you create:
 Then before you do any data processing, you check the token is valid:
 
 ```php
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
+
 try {
     $easyCSRF->check('my_token', $_POST['token']);
-}
-catch(Exception $e) {
+} catch(InvalidCsrfTokenException $e) {
     echo $e->getMessage();
 }
 ```
@@ -65,7 +66,7 @@ check method. Tokens older than the timespan will not be valid.
 
 ```php
 // Example 1 hour expiration
-$easyCSRF->check('my_token', $_POST['token'], 60*60);
+$easyCSRF->check('my_token', $_POST['token'], 60 * 60);
 ```
 
 ## Reusable Tokens
@@ -88,13 +89,26 @@ and use that when instantiating EasyCSRF.
 
 use EasyCSRF\Interfaces\SessionProvider;
 
-class CustomSessionProvider implements SessionProvider {
-
+class CustomSessionProvider implements SessionProvider
+{
+    /**
+     * Get a session value.
+     *
+     * @param string $key
+     * @return mixed
+     */
     public function get($key)
     {
         // Return your stored data
     }
 
+    /**
+     * Set a session value.
+     *
+     * @param string $key
+     * @param mixed $value
+     * @return void
+     */
     public function set($key, $value)
     {
         // Store your data
