@@ -6,7 +6,7 @@ protect your forms from [Cross Site Request Forgery](http://en.wikipedia.org/wik
 
 ## Requirements
 
-* PHP 7.0+
+* PHP 7.3+
 
 ## Install
 
