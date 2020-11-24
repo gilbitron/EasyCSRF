@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use EasyCSRF\EasyCSRF;
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\NativeSessionProvider;
 
 class EasyCSRFTest extends TestCase
@@ -42,21 +43,21 @@ class EasyCSRFTest extends TestCase
 
     public function testExceptionMissingFormToken()
     {
-        $this->expectException('Exception', 'Missing CSRF form token.');
+        $this->expectException(InvalidCsrfTokenException::class);
 
         $this->easyCSRF->check('test', '');
     }
 
     public function testExceptionMissingSessionToken()
     {
-        $this->expectException('Exception', 'Missing CSRF session token.');
+        $this->expectException(InvalidCsrfTokenException::class);
 
         $this->easyCSRF->check('test', '12345');
     }
 
     public function testExceptionOrigin()
     {
-        $this->expectException('Exception', 'Form origin does not match token origin.');
+        $this->expectException(InvalidCsrfTokenException::class);
 
         $token = $this->easyCSRF->generate('test');
         $_SERVER['REMOTE_ADDR'] = '2.2.2.2';
@@ -65,7 +66,7 @@ class EasyCSRFTest extends TestCase
 
     public function testExceptionInvalidToken()
     {
-        $this->expectException('Exception', 'Invalid CSRF token.');
+        $this->expectException(InvalidCsrfTokenException::class);
 
         $this->easyCSRF->generate('test');
         $this->easyCSRF->check('test', '12345');
@@ -73,7 +74,7 @@ class EasyCSRFTest extends TestCase
 
     public function testExceptionExpired()
     {
-        $this->expectException('Exception', 'CSRF token has expired.');
+        $this->expectException(InvalidCsrfTokenException::class);
 
         $token = $this->easyCSRF->generate('test');
         sleep(2);
