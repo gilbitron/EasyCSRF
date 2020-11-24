@@ -2,6 +2,7 @@
 
 namespace EasyCSRF;
 
+use EasyCSRF\Exceptions\InvalidCsrfTokenException;
 use EasyCSRF\Interfaces\SessionProvider;
 
 class EasyCSRF
@@ -55,12 +56,12 @@ class EasyCSRF
         $key = preg_replace('/[^a-zA-Z0-9]+/', '', $key);
 
         if (!$token) {
-            throw new \Exception('Missing CSRF form token.');
+            throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
         $session_token = $this->session->get($this->session_prefix . $key);
         if (!$session_token) {
-            throw new \Exception('Missing CSRF session token.');
+            throw new InvalidCsrfTokenException('Invalid CSRF session token');
         }
 
         if (!$multiple) {
@@ -68,16 +69,16 @@ class EasyCSRF
         }
 
         if (sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']) != substr(base64_decode($session_token), 10, 40)) {
-            throw new \Exception('Form origin does not match token origin.');
+            throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
         if ($token != $session_token) {
-            throw new \Exception('Invalid CSRF token.');
+            throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
         // Check for token expiration
         if ($timespan != null && is_int($timespan) && intval(substr(base64_decode($session_token), 0, 10)) + $timespan < time()) {
-            throw new \Exception('CSRF token has expired.');
+            throw new InvalidCsrfTokenException('CSRF token has expired');
         }
     }
 
