@@ -6,16 +6,26 @@ use EasyCSRF\Interfaces\SessionProvider;
 
 class EasyCSRF
 {
+    /**
+     * @var SessionProvider
+     */
     protected $session;
+
+    /**
+     * @var string
+     */
     protected $session_prefix = 'easycsrf_';
 
+    /**
+     * @param SessionProvider $sessionProvider
+     */
     public function __construct(SessionProvider $sessionProvider)
     {
         $this->session = $sessionProvider;
     }
 
     /**
-     * Generate a CSRF token
+     * Generate a CSRF token.
      *
      * @param  string $key Key for this token
      * @return string
@@ -33,7 +43,7 @@ class EasyCSRF
     }
 
     /**
-     * Check the CSRF token is valid
+     * Check the CSRF token is valid.
      *
      * @param  string  $key            Key for this token
      * @param  string  $token          The token string (usually found in $_POST)
@@ -72,7 +82,7 @@ class EasyCSRF
     }
 
     /**
-     * Generate a random string
+     * Generate a random string.
      *
      * @param int $length
      * @return string
