@@ -33,11 +33,10 @@ class EasyCSRF
      */
     public function generate($key)
     {
-        $key = preg_replace('/[^a-zA-Z0-9]+/', '', $key);
+        $key = $this->sanitizeKey($key);
 
-        $extra = sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']);
-        // time() is used for token expiration
-        $token = base64_encode(time() . $extra . $this->randomString(32));
+        $token = $this->createToken();
+
         $this->session->set($this->session_prefix . $key, $token);
 
         return $token;
@@ -53,14 +52,14 @@ class EasyCSRF
      */
     public function check($key, $token, $timespan = null, $multiple = false)
     {
-        $key = preg_replace('/[^a-zA-Z0-9]+/', '', $key);
+        $key = $this->sanitizeKey($key);
 
         if (!$token) {
             throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
-        $session_token = $this->session->get($this->session_prefix . $key);
-        if (!$session_token) {
+        $sessionToken = $this->session->get($this->session_prefix . $key);
+        if (!$sessionToken) {
             throw new InvalidCsrfTokenException('Invalid CSRF session token');
         }
 
@@ -68,18 +67,50 @@ class EasyCSRF
             $this->session->set($this->session_prefix . $key, null);
         }
 
-        if (sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']) != substr(base64_decode($session_token), 10, 40)) {
+        if ($this->referralHash() !== substr(base64_decode($sessionToken), 10, 40)) {
             throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
-        if ($token != $session_token) {
+        if ($token != $sessionToken) {
             throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
         // Check for token expiration
-        if ($timespan != null && is_int($timespan) && intval(substr(base64_decode($session_token), 0, 10)) + $timespan < time()) {
+        if (is_int($timespan) && (intval(substr(base64_decode($sessionToken), 0, 10)) + $timespan) < time()) {
             throw new InvalidCsrfTokenException('CSRF token has expired');
         }
+    }
+
+    /**
+     * Sanitize the session key.
+     *
+     * @param string $key
+     * @return string
+     */
+    protected function sanitizeKey($key)
+    {
+        return preg_replace('/[^a-zA-Z0-9]+/', '', $key);
+    }
+
+    /**
+     * Create a new token.
+     *
+     * @return string
+     */
+    protected function createToken()
+    {
+        // time() is used for token expiration
+        return base64_encode(time() . $this->referralHash() . $this->randomString(32));
+    }
+
+    /**
+     * Return a unique referral hash.
+     *
+     * @return void
+     */
+    protected function referralHash()
+    {
+        return sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']);
     }
 
     /**
