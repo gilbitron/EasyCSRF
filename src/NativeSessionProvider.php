@@ -14,11 +14,7 @@ class NativeSessionProvider implements SessionProvider
      */
     public function get($key)
     {
-        if (isset($_SESSION[$key])) {
-            return $_SESSION[$key];
-        }
-
-        return null;
+        return $_SESSION[$key] ?? null;
     }
 
     /**
