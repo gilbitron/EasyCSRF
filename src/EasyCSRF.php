@@ -106,7 +106,7 @@ class EasyCSRF
     /**
      * Return a unique referral hash.
      *
-     * @return void
+     * @return string
      */
     protected function referralHash()
     {
