@@ -71,7 +71,7 @@ class EasyCSRF
             throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
-        if ($token != $sessionToken) {
+        if ($token !== $sessionToken) {
             throw new InvalidCsrfTokenException('Invalid CSRF token');
         }
 
@@ -100,7 +100,7 @@ class EasyCSRF
     protected function createToken()
     {
         // time() is used for token expiration
-        return base64_encode(time() . $this->referralHash() . $this->randomString(32));
+        return base64_encode(time() . $this->referralHash() . $this->randomString());
     }
 
     /**
@@ -116,18 +116,11 @@ class EasyCSRF
     /**
      * Generate a random string.
      *
-     * @param int $length
      * @return string
+     * @throws \Exception
      */
-    protected function randomString($length)
+    protected function randomString(): string
     {
-        $seed = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijqlmnopqrtsuvwxyz0123456789';
-        $max = strlen($seed) - 1;
-        $string = '';
-        for ($i = 0; $i < $length; ++$i) {
-            $string .= $seed[intval(mt_rand(0.0, $max))];
-        }
-
-        return $string;
+        return sha1(random_bytes(32));
     }
 }
