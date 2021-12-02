@@ -110,6 +110,10 @@ class EasyCSRF
      */
     protected function referralHash()
     {
+        if (empty($_SERVER['HTTP_USER_AGENT'])) {
+            return sha1($_SERVER['REMOTE_ADDR']);
+        }
+
         return sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']);
     }
 
