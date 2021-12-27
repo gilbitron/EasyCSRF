@@ -9,7 +9,7 @@ class EasyCSRFTest extends TestCase
 {
     protected $easyCSRF;
 
-    protected function setUp() : void
+    protected function setUp(): void
     {
         $_SERVER['REMOTE_ADDR'] = '1.1.1.1';
         $_SERVER['HTTP_USER_AGENT'] = 'useragent';
@@ -79,5 +79,14 @@ class EasyCSRFTest extends TestCase
         $token = $this->easyCSRF->generate('test');
         sleep(2);
         $this->easyCSRF->check('test', $token, 1);
+    }
+
+    public function testUndefinedUserAgent()
+    {
+        unset($_SERVER['HTTP_USER_AGENT']);
+
+        $token = $this->easyCSRF->generate('test');
+
+        $this->assertNotNull($token);
     }
 }
